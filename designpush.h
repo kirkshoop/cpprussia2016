@@ -2,26 +2,6 @@
 
 namespace designpushdef
 {
-/*
-template<class V>
-struct receiver
-{
-    void operator()(V v);
-};
-
-template<class SenderV>
-struct algorithm
-{
-    SenderU operator()(SenderV s);
-};
-
-template<class Receiver>
-struct sender
-{
-    void operator()(Receiver r);
-};
-*/
-
 template<class Next>
 struct receiver
 {

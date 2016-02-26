@@ -105,6 +105,9 @@ std::ostream& operator<< (std::ostream& out, const model& m) {
     for (auto i : m.store) {
         auto url = i.first;
         auto d = i.second;
+        size_t sep = url.find_last_of("\\/");
+        if (sep != std::string::npos)
+            url = url.substr(sep + 1, url.size() - sep - 1);
         out << url << ", " << d.size;
         if (!d.line.empty()) {
             out << endl << d.line;

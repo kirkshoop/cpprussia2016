@@ -38,6 +38,7 @@
             padding: 5px;
             background: black;
             color: lightgreen;
+            text-overflow: ellipsis;
         }
 
         table {
@@ -224,7 +225,8 @@ the mouse event functions wrap HTML DOM addeventlistener access provided by emsc
 
 function: rxhttp
 types: string
-arguments: http://localhost:8090/serve.js
+argumentsl: http://localhost:8090/serve.js
+arguments: http://kirkshoop.github.io/cpprussia2016/README.md
 argumentsd: https://raw.githubusercontent.com/Reactive-Extensions/RxCpp/master/AUTHORS.txt
 output: rxhttplocalhostoutput
 
@@ -240,7 +242,7 @@ struct model {
     map<string, data> store;
 };
 
-httpGet("http://localhost:8090/serve.js") |
+httpGet("http://kirkshoop.github.io/.../README.md") |
   flat_map([](response_t r) {
     return r.progress() |
       `combine_latest`(
