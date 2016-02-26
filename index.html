@@ -36,6 +36,7 @@
             font-size: 14pt;
             border: 2px solid steelblue;
             padding: 5px;
+            width: 95%;
             background: black;
             color: lightgreen;
             text-overflow: ellipsis;
@@ -1064,6 +1065,40 @@ __output__ (emscripten)
 ???
 ---
 
+function: rxtestdelay>rxdelay
+types: number, number>number, number, number
+arguments: 1000, 1500>1000, 1500, 3
+output: rxtestdelayrightoutput>rxdelayleftoutput
+
+## what needs to change to support testing?
+
+.split-50[
+
+.column[
+
+__output__ (emscripten)
+
+.emscripten-output[
+ <div id="rxdelayleftoutput"></div>
+]
+
+]
+
+.column[
+
+__output__ (emscripten)
+
+.emscripten-output[
+ <div id="rxtestdelayrightoutput"></div>
+]
+
+]
+
+]
+
+???
+---
+
 ## what needs to change to support testing?
 
 ```cpp
@@ -1568,16 +1603,21 @@ fiveOddInts.subscribe([](int n){. . .});
 
         slideshow.on("showSlide", function(slide) {
             if (!!slide.properties.function){
-                var output = document.getElementById(slide.properties.output);
-                if (output) output.innerHTML = ''; // clear contents
-                Module["print"] = printTo(output);
-                if (!!slide.properties.function) {
+                var f = slide.properties.function.split('>');
+                var r = (slide.properties.return || "").split('>');
+                var t = (slide.properties.types || "").split('>');
+                var a = (slide.properties.arguments || "").split('>');
+                var o = slide.properties.output.split('>');
+                f.map((func, i) => {
+                    var output = document.getElementById(o[i]);
+                    if (output) output.innerHTML = ''; // clear contents
+                    Module["print"] = printTo(output);
                     Module.ccall(
-                        slide.properties.function, // C function
-                        slide.properties.return || null, // return type
-                        (slide.properties.types || "").split(','), // argument types
-                        (slide.properties.arguments || "").split(',')) // arguments
-                }
+                        func, // C function
+                        (r[i] || "") == "" ? null : r[i], // return type
+                        t[i].split(','), // argument types
+                        a[i].split(',')) // arguments
+                });
             }
         });
         slideshow.on("hideSlide", function(slide) {
