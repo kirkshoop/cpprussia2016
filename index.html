@@ -1608,7 +1608,7 @@ fiveOddInts.subscribe([](int n){. . .});
                 var t = (slide.properties.types || "").split('>');
                 var a = (slide.properties.arguments || "").split('>');
                 var o = slide.properties.output.split('>');
-                f.map((func, i) => {
+                f.map(function(func, i) {
                     var output = document.getElementById(o[i]);
                     if (output) output.innerHTML = ''; // clear contents
                     Module["print"] = printTo(output);
